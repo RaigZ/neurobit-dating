@@ -12,7 +12,6 @@ def on_sensor_state_changed(sensor, state):
 
 def on_brain_bit_signal_data_received(sensor, data):
     logger.debug(data)
-    g.db[]
 
 logger.debug("Create Headband Scanner")
 gl_scanner = Scanner([SensorFamily.SensorLEBrainBit])
@@ -39,4 +38,3 @@ gl_scanner.start()
 
 def get_head_band_sensor_object():
     return gl_sensor
-

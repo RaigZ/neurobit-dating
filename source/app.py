@@ -9,7 +9,6 @@ import traceback
 
 # from tools.eeg import get_head_band_sensor_object
 
-
 from db_con import get_db_instance, get_db
 
 from tools.token_required import token_required
@@ -45,7 +44,6 @@ def init_new_env():
 def index():
     return redirect('/static/index.html')
 
-
 @app.route("/secure_api/<proc_name>",methods=['GET', 'POST'])
 @token_required
 def exec_secure_proc(proc_name):
@@ -73,7 +71,7 @@ def exec_secure_proc(proc_name):
 @app.route("/open_api/<proc_name>",methods=['GET', 'POST'])
 def exec_proc(proc_name):
     logger.debug(f"Call to {proc_name}")
-
+    
     #setup the env
     init_new_env()
 
@@ -91,6 +89,14 @@ def exec_proc(proc_name):
 
     return resp
 
+from flask import request, jsonify
+from dummy_data import generate_dummy_brainwave_data
+
+@app.route('/open_api/generate_dummy_brainwave_data', methods=['POST'])
+def handle_generate_dummy_brainwave_data():
+    data = request.json.get('data')
+    response_data = generate_dummy_brainwave_data(data)
+    return jsonify(response_data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

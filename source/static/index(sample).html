@@ -7,16 +7,60 @@
     <body>
 
 	<script>
-		function play_start(){
-			$.post("/open_api/play_movie", { "data":"somedata", "any":"data"},
-				function(data, textStatus) {
-					//this gets called when browser receives response from server
-					console.log(data);
-				}, "json").fail( function(response) {
-					//this gets called if the server throws an error
-					console.log("error");
-				console.log(response);});
+		// function play_start(){
+		// 	$.post("/open_api/play_movie", { "data":"somedata", "any":"data"},
+		// 		function(data, textStatus) {
+		// 			//this gets called when browser receives response from server
+		// 			console.log(data);
+		// 		}, "json").fail( function(response) {
+		// 			//this gets called if the server throws an error
+		// 			console.log("error");
+		// 		console.log(response);});
+		// }
+
+		function generate_dummy_data_request(data) {
+			$.post("/open_api/generate_dummy_brainwave_data", { "data": data }, function(response, textStatus) {
+				// Data received from the server (dummy brainwave data)
+				console.log(response);
+			}, "json").fail( function(response) {
+				// This gets called if the server throws an error
+				console.log("error");
+				console.log(response);
+			});
 		}
+
+		function play_start(){
+			var dummyData = [1, 2, 3, 4, 5];  // Hardcoded dummy data
+
+			$.ajax({
+				url: "/open_api/generate_dummy_brainwave_data",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify({ "data": dummyData }),
+				dataType: "json",
+				success: function(response) {
+					console.log(response);
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log("Error:", textStatus, errorThrown);
+				}
+			});
+		}
+
+		// function play_start(){
+		// 	var dummyData = [1, 2, 3, 4, 5];  // Hardcoded dummy data
+		// 	console.log("GENERATE DUMMY DATA")
+		// 	generate_dummy_data_request(dummyData)
+		// 	$.post("/open_api/play_movie", { "data": dummyData, "any": "data"},
+		// 		function(data, textStatus) {
+		// 			//this gets called when browser receives response from server
+		// 			console.log(data);
+		// 		}, "json").fail( function(response) {
+		// 			//this gets called if the server throws an error
+		// 			console.log("error");
+		// 		console.log(response);});
+		// }
+
 	</script>
 
 

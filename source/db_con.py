@@ -3,7 +3,9 @@
 
 #Use sqllite
 import sqlite3
+import pickle
 
+from tools.logging import logger
 
 def get_db():
     #Postgres
@@ -25,7 +27,14 @@ if __name__ == "__main__":
     for r in cur.fetchall():
         print(r)
 
-    cur.execute("create table brain (id int,movieID string(255), data string);")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS brain (
+            id INTEGER PRIMARY KEY,
+            movieID TEXT(255),
+            data TEXT
+        );
+    """)    
+    
     db.commit()
 
 
